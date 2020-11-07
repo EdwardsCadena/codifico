@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=">
+  <title></title>
+ 
+</head>
+
+<body>
+    
+    <style>
+        #container{
+          display : grid;
+          grid-template: repeat(3, 100px)/ repeat(3, 100px);
+        }
+        span{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border:1px solid black;
+        }
+        
+        </style>
+
+<div id="container"></div>
+<script>
+    const game =[
+        ['','',''],
+        ['','',''],
+        ['','',''],
+    ]
+    let currentUser = 'O'
+    function chechStatus(user){
+        if(game [0][0] === user && game [0][1] === user &&game [0][2] === user )
+        {
+            return true
+        }
+        if(game [1][0] === user && game [1][1] === user &&game [1][2] === user )
+        {
+            return true
+        }
+        if(game [2][0] === user && game [2][1] === user &&game [2][2] === user )
+        {
+            return true
+        }
+        if(game [0][0] === user && game [1][0] === user &&game [2][0] === user )
+        {
+            return true
+        }
+        if(game [0][1] === user && game [1][2] === user &&game [2][3] === user )
+        {
+            return true
+        }
+        if(game [0][2] === user && game [1][2] === user &&game [2][2] === user )
+        {
+            return true
+        }
+        if(game [2][0] === user && game [1][1] === user &&game [0][2] === user )
+        {
+            return true
+        }
+        if(game [0][0] === user && game [1][1] === user &&game [2][2] === user )
+        {
+            return true
+        }
+        return false
+    }
+    function setWinner(){
+        console.log('gano el usuario ${user}')
+    }
+    function selectItem(){
+        game[this.dataset.row] = currentUser
+        setBoard()
+        if(checkStatus (currentUser)){
+            setWinner(currentUser)
+        }
+        if(currentUser ==='O'){
+            currentUser = 'X'
+        }else{
+            currentUser ='O'
+        }
+
+    }
+    function render({content, row, column}, container){
+        const a = document.createElement('span')
+        a.textContent = '${content}'
+        a.dataset.row = row
+        a.dataset.column = column
+        a.addEventlist('click', selectItem)
+        container.append(a)
+    }
+    function setBoard(){
+        container.innerHTML=''
+        game.forEach(( row, indexRow)=>{
+            row.forEach(( column, indexColumn)=>{
+                render({
+                    content:column,
+                    row: indexRow,
+                    column: indexColumn,
+                }, window.container)
+            })
+        })
+    }
+</script>   
+</body>
+</html>
